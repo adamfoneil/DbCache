@@ -71,7 +71,7 @@ namespace Testing
 
             var cache = new SampleDbCache(() => LocalDb.GetConnection("DbCacheTest"));
 
-            // first fetch will be live because it's 
+            // first fetch will be live because it's a new object
             var fetched = cache.GetAsync(objectName,
                 async () =>
                 {
