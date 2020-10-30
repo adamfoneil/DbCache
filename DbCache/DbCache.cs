@@ -5,6 +5,12 @@ using System.Threading.Tasks;
 
 namespace DbCacheLibrary
 {
+    public enum ObjectSource
+    {
+        Cache,
+        Live
+    }
+
     public abstract class DbCache : DbDictionary<string>
     {
         public DbCache(Func<IDbConnection> getConnection, string tableName) : base(getConnection, tableName)
@@ -15,6 +21,8 @@ namespace DbCacheLibrary
         /// string to prepend before every key (for example by user name)
         /// </summary>
         public string KeyPrefix { get; set; }
+
+        public ObjectSource Source { get; private set; }
 
         public async Task<TValue> GetAsync<TValue>(string key, Func<Task<TValue>> accessor, TimeSpan maxAge)
         {
@@ -33,11 +41,13 @@ namespace DbCacheLibrary
                 // query it anew and store
                 value = await accessor.Invoke();
                 await SetAsync(key, value);
+                Source = ObjectSource.Live;
             }
             else
             {
                 // or just give me the cached data
                 value = Deserialize<TValue>(entry.Value);
+                Source = ObjectSource.Cache;
             }
 
             return value;            
