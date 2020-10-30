@@ -1,6 +1,6 @@
 [![Nuget](https://img.shields.io/nuget/v/AO.DbCache)](https://www.nuget.org/packages/AO.DbCache/)
 
-This came from a need to throttle API calls to a 3rd party service. I wanted a simple way to cache results from previous calls with a dictionary key, and set a time limit after which the cache expires and requeries the live source. If I call a service a often in a short time, I want to limit those calls automatically.
+This came from a need to throttle API calls to a 3rd party service. I wanted a simple way to cache results from previous calls with a dictionary key, and set a time limit after which the cache expires and I'm allowed to query the live source again. If I call a service within a specified time span, then I get the cached data. It works with any type that can be json serialized.
 
 This uses the [DbDictionary](https://github.com/adamfoneil/Dapper.CX/blob/master/Dapper.CX.Base/Abstract/DbDictionary.cs) class from my Dapper.CX project. This project builds upon this with the [DbCache](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs) class.
 
