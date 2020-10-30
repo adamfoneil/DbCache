@@ -57,11 +57,5 @@ namespace DbCacheLibrary
 
             return value;            
         }       
-
-        public new async Task SetAsync<TValue>(string key, TValue value)
-        {
-            key = KeyPrefix + key;
-            await base.SetAsync(key, value);
-        }
     }
 }
