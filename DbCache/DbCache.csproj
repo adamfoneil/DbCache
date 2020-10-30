@@ -9,10 +9,23 @@
     <Product>AO.DbCache</Product>
     <Description>A simple, generic cache solution for SQL Server</Description>
     <Copyright>Copyright (c) 2020 Adam O'Neil</Copyright>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageProjectUrl>https://github.com/adamfoneil/DbCache</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/adamfoneil/DbCache</RepositoryUrl>
+    <PackageTags>sql-server cache</PackageTags>
+    <Version>0.9.0-beta</Version>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Dapper.CX.SqlServer" Version="1.3.12" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
