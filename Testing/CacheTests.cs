@@ -66,9 +66,9 @@ namespace Testing
                 LastName = "zamooga"
             };
 
-            client.SaveAsync(objectName, local).Wait();
             client.DeleteAsync(objectName).Wait();
-
+            client.SaveAsync(objectName, local).Wait();
+            
             var cache = new SampleDbCache(() => LocalDb.GetConnection("DbCacheTest"));
 
             // first fetch will be live because it's a new object
@@ -90,8 +90,6 @@ namespace Testing
             Assert.IsTrue(fetched.FirstName.Equals(local.FirstName));
             Assert.IsTrue(fetched.LastName.Equals(local.LastName));
             Assert.IsTrue(cache.Source == ObjectSource.Cache);
-
-
         }
 
         private CloudObjectsClient GetClient()
