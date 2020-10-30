@@ -1,0 +1,3 @@
+This came from a need to throttle API calls to a 3rd party service. I wanted a simple way to cache results from a prior API call, and set a time limit after which the cache expires and requeries the live source. This uses the [DbDictionary](https://github.com/adamfoneil/Dapper.CX/blob/master/Dapper.CX.Base/Abstract/DbDictionary.cs) class from my Dapper.CX project. This project builds upon this with the [DbCache](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs) class.
+
+See the integration [tests](https://github.com/adamfoneil/DbCache/blob/master/Testing/CacheTests.cs) to see a sample use.
