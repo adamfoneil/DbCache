@@ -13,8 +13,6 @@ namespace DbCacheLibrary
 
     public abstract class DbCache : DbDictionary<string>
     {
-        private static bool _initialied = false;
-
         public DbCache(Func<IDbConnection> getConnection, string tableName) : base(getConnection, tableName)
         {
         }
@@ -28,8 +26,7 @@ namespace DbCacheLibrary
 
         public async Task<TValue> GetAsync<TValue>(string key, Func<Task<TValue>> accessor, TimeSpan maxAge)
         {
-            if (!_initialied) await InitializeAsync();
-            _initialied = true;
+            await InitializeAsync();            
 
             key = KeyPrefix + key;
             TValue value;

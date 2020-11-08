@@ -1,6 +1,9 @@
+using AO.Models;
 using CloudObjects.Client;
 using CloudObjects.Client.Models;
 using CloudObjects.Client.Static;
+using Dapper;
+using Dapper.CX.Extensions;
 using DbCacheLibrary;
 using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -13,6 +16,26 @@ namespace Testing
     [TestClass]
     public class CacheTests
     {
+        const string dbName = "DbCacheTest";
+
+        [ClassInitialize]
+        public static void DeleteDb(TestContext context)
+        {
+            LocalDb.TryDropDatabaseIfExists(dbName, out _);
+        }
+
+        private void DropCacheTable(DbCache cache)
+        {            
+            using (var cn = LocalDb.GetConnection(dbName))
+            {
+                var obj = ObjectName.FromName(cache.TableName);
+                if (cn.TableExistsAsync(obj.Schema, obj.Name).Result)
+                {
+                    cn.Execute($"DROP TABLE {cache.TableName}");
+                }                
+            }            
+        }
+
         [TestMethod]
         public void CloudObjectsLiveSource()
         {
@@ -26,9 +49,12 @@ namespace Testing
             };
 
             client.DeleteAsync(objectName).Wait();
-            client.SaveAsync(objectName, local).Wait();            
+            client.SaveAsync(objectName, local).Wait();
+            
+            var cache = new SampleDbCache(() => LocalDb.GetConnection(dbName));
 
-            var cache = new SampleDbCache(() => LocalDb.GetConnection("DbCacheTest"));
+            // assume table hasn't been created yet
+            DropCacheTable(cache);
 
             // first fetch is always live
             var fetched = cache.GetAsync(objectName,
@@ -69,7 +95,10 @@ namespace Testing
             client.DeleteAsync(objectName).Wait();
             client.SaveAsync(objectName, local).Wait();
             
-            var cache = new SampleDbCache(() => LocalDb.GetConnection("DbCacheTest"));
+            var cache = new SampleDbCache(() => LocalDb.GetConnection(dbName));
+
+            // assume table hasn't been created yet
+            DropCacheTable(cache);
 
             // first fetch will be live because it's a new object
             var fetched = cache.GetAsync(objectName,
