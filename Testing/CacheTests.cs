@@ -121,6 +121,44 @@ namespace Testing
             Assert.IsTrue(cache.Source == ObjectSource.Cache);
         }
 
+        [TestMethod]
+        public void CloudObjectsFixedDateExpiration()
+        {
+            var client = GetClient();
+            var cache = new SampleDbCache(() => LocalDb.GetConnection(dbName));
+
+            var sample = new SampleObject()
+            {
+                FirstName = "Great",
+                LastName = "Mazinga"
+            };
+
+            client.DeleteAsync("object3").Wait();
+            client.SaveAsync("object3", sample).Wait();
+
+            // should always get live because it's always later than an hour ago
+            var fetched = cache.GetAsync("object3",
+                async () =>
+                {
+                    var result = await client.GetAsync<SampleObject>("object3");
+                    return result.Object;
+                },
+                DateTime.UtcNow.Subtract(TimeSpan.FromHours(1))).Result;
+
+            Assert.IsTrue(cache.Source == ObjectSource.Live);
+
+            fetched = cache.GetAsync("object3",
+                async () =>
+                {
+                    var result = await client.GetAsync<SampleObject>("object3");
+                    return result.Object;
+                },
+                DateTime.UtcNow.Add(TimeSpan.FromHours(1))).Result;
+
+            // should always get cache because it's always earlier than an hour from now
+            Assert.IsTrue(cache.Source == ObjectSource.Cache);
+        }
+
         private CloudObjectsClient GetClient()
         {
             var config = GetConfig();

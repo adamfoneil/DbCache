@@ -52,27 +52,20 @@ namespace DbCacheLibrary
         }
 
         public async Task<TValue> GetAsync<TValue>(string key, Func<Task<TValue>> accessor, TimeSpan maxAge) =>
-            await GetInnerAsync(key, accessor, (entry) => HasElapsed(entry, maxAge));
+            await GetInnerAsync(key, accessor, (entry) => HasAged(entry, maxAge));
 
-        public async Task<TValue> GetAsync<TValue>(string key, Func<Task<TValue>> accessor, DateTime expireAfter) =>
-            await GetInnerAsync(key, accessor, (entry) => HasExpired(entry, expireAfter));
+        public async Task<TValue> GetAsync<TValue>(string key, Func<Task<TValue>> accessor, DateTime expireAfterUtc) =>
+            await GetInnerAsync(key, accessor, (entry) => HasPassed(expireAfterUtc));
 
-        private bool HasExpired(DictionaryRow entry, DateTime expireAfter)
+        private bool HasPassed(DateTime expireAfter) => DateTime.UtcNow > expireAfter;
+        
+        private bool HasAged(DictionaryRow entry, TimeSpan maxAge)
         {
-            var entryDate = (entry != null) ?
-                entry.DateModified ?? entry.DateCreated :
-                DateTime.MinValue;
-
-            return (expireAfter > entryDate);
-        }
-
-        private bool HasElapsed(DictionaryRow entry, TimeSpan maxAge)
-        {
-            var age = (entry != null) ?
+            var entryAge = (entry != null) ?
                 DateTime.UtcNow.Subtract(entry.DateModified ?? entry.DateCreated) :
                 TimeSpan.MaxValue;
 
-            return (age > maxAge);
+            return (entryAge > maxAge);
         }
     }
 }
