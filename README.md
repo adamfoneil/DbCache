@@ -8,7 +8,7 @@ This uses the [DbDictionary](https://github.com/adamfoneil/Dapper.CX/blob/master
 var cloudObj = await client.GetAsync<SampleObject>(objectName);
 return cloudObj.Object;
 ```
-Let's say you're okay fetching this at most every hour. You would use `DbCache` to store the call result with a string key. This example says: get `SampleObject` with key `object1` a maximum of once per hour. If less than an hour has passed since the last call, then the cached data is returned. Otherwise, the live data is returned.
+Let's say you're okay fetching live data from this at most every hour. You would use `DbCache` to store the call result with a string key. This example says: get `SampleObject` with key `object1` a maximum of once per hour. If less than an hour has passed since the last call, then the cached data is returned. Otherwise, the live data is returned.
 
 ```csharp
 var fetched = await cache.GetAsync("object1",
