@@ -19,4 +19,4 @@ var fetched = await cache.GetAsync("object1",
     }, TimeSpan.FromMinutes(60));
 ```
 
-To determine if the returned data came from the cache or live source, use the [Source](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L25) property.
+To determine if the returned data came from the cache or live source, use the [Source](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L26) property.
