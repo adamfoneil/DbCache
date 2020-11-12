@@ -20,3 +20,13 @@ var fetched = await cache.GetAsync("object1",
 ```
 
 To determine if the returned data came from the cache or live source, use the [Source](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L26) property.
+
+# Reference [DbCache.cs](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L15)
+## Properties
+- string [KeyPrefix](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L24)
+- [ObjectSource](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L9) [Source](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L26)
+## Methods
+- Task\<TValue\> [GetAsync](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L54)
+ (string key, Func<Task<TValue>> accessor, TimeSpan maxAge)
+- Task\<TValue\> [GetAsync](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L57)
+ (string key, Func<Task<TValue>> accessor, DateTime expireAfterUtc)
