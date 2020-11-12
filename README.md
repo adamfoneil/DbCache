@@ -21,7 +21,7 @@ var fetched = await cache.GetAsync("object1",
 
 To determine if the returned data came from the cache or live source, use the [Source](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L26) property.
 
-# Reference [DbCache.cs](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L15)
+# Reference [DbCache.cs](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L15) : [DbDictionary.cs](https://github.com/adamfoneil/Dapper.CX/blob/master/Dapper.CX.Base/Abstract/DbDictionary.cs)
 ## Properties
 - string [KeyPrefix](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L24)
 - [ObjectSource](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L9) [Source](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L26)
@@ -30,23 +30,3 @@ To determine if the returned data came from the cache or live source, use the [S
  (string key, Func<Task<TValue>> accessor, TimeSpan maxAge)
 - Task\<TValue\> [GetAsync](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L57)
  (string key, Func<Task<TValue>> accessor, DateTime expireAfterUtc)
-    
-# Dapper.CX.Abstract.DbDictionary [DbDictionary.cs](https://github.com/adamfoneil/Dapper.CX/blob/master/Dapper.CX.Base/Abstract/DbDictionary.cs)
-## Properties
-- string [TableName](https://github.com/adamfoneil/Dapper.CX/blob/master/Dapper.CX.Base/Abstract/DbDictionary.cs#L60)
-- [TKey](https://github.com/adamfoneil/Dapper.CX/blob/master/Dapper.CX.Base/Abstract/DbDictionary.cs#L10) [Key](https://github.com/adamfoneil/Dapper.CX/blob/master/Dapper.CX.Base/Abstract/DbDictionary.cs#L117)
-- string [Value](https://github.com/adamfoneil/Dapper.CX/blob/master/Dapper.CX.Base/Abstract/DbDictionary.cs#L118)
-- DateTime [DateCreated](https://github.com/adamfoneil/Dapper.CX/blob/master/Dapper.CX.Base/Abstract/DbDictionary.cs#L119)
-- DateTime? [DateModified](https://github.com/adamfoneil/Dapper.CX/blob/master/Dapper.CX.Base/Abstract/DbDictionary.cs#L120)
-## Methods
-- Task [InitializeAsync](https://github.com/adamfoneil/Dapper.CX/blob/master/Dapper.CX.Base/Abstract/DbDictionary.cs#L24)
- ()
-- Task\<TValue\> [GetAsync](https://github.com/adamfoneil/Dapper.CX/blob/master/Dapper.CX.Base/Abstract/DbDictionary.cs#L66)<TKey, TValue>
- (TKey key, [ TValue defaultValue ])
-- Task [SetAsync](https://github.com/adamfoneil/Dapper.CX/blob/master/Dapper.CX.Base/Abstract/DbDictionary.cs#L82)<TKey, TValue>
- (TKey key, TValue value)
-- Task\<bool\> [KeyExistsAsync](https://github.com/adamfoneil/Dapper.CX/blob/master/Dapper.CX.Base/Abstract/DbDictionary.cs#L99)<TKey>
- (TKey key)
-- Task [DeleteAsync](https://github.com/adamfoneil/Dapper.CX/blob/master/Dapper.CX.Base/Abstract/DbDictionary.cs#L107)<TKey>
- (TKey key)
-
