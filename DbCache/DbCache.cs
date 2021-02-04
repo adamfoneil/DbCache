@@ -1,6 +1,7 @@
 ﻿using Dapper.CX.Abstract;
 using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
 
@@ -63,6 +64,20 @@ namespace DbCacheLibrary
             return Deserialize<TValue>(row.Value);
         }
         
+        public async Task<Dictionary<string, int>> SetEachAsync<TItem>(IEnumerable<TItem> items, Func<TItem, string> keyAccessor)
+        {
+            var result = new Dictionary<string, int>();
+
+            foreach (var item in items)
+            {
+                var key = keyAccessor.Invoke(item);
+                int id = await SetAsync(key, item);
+                result.Add(key, id);
+            }
+
+            return result;
+        }
+
         private bool HasPassed(DateTime expireAfter) => DateTime.UtcNow > expireAfter;
         
         private bool HasAged(DictionaryRow entry, TimeSpan maxAge)

@@ -14,12 +14,12 @@
     <PackageProjectUrl>https://github.com/adamfoneil/DbCache</PackageProjectUrl>
     <RepositoryUrl>https://github.com/adamfoneil/DbCache</RepositoryUrl>
     <PackageTags>sql-server cache</PackageTags>
-    <Version>1.0.1</Version>
-    <PackageReleaseNotes>Added QueryAsync method so you can get the last fetched API result from database directly</PackageReleaseNotes>
+    <Version>1.0.2</Version>
+    <PackageReleaseNotes>added SetEachAsync for saving json of individual objects from an IEnumerable</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dapper.CX.SqlServer" Version="1.3.13" />
+    <PackageReference Include="Dapper.CX.SqlServer" Version="1.3.29" />
   </ItemGroup>
 
   <ItemGroup>
