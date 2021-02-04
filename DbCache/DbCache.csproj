@@ -14,7 +14,8 @@
     <PackageProjectUrl>https://github.com/adamfoneil/DbCache</PackageProjectUrl>
     <RepositoryUrl>https://github.com/adamfoneil/DbCache</RepositoryUrl>
     <PackageTags>sql-server cache</PackageTags>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
+    <PackageReleaseNotes>Added QueryAsync method so you can get the last fetched API result from database directly</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

@@ -57,6 +57,12 @@ namespace DbCacheLibrary
         public async Task<TValue> GetAsync<TValue>(string key, Func<Task<TValue>> accessor, DateTime expireAfterUtc) =>
             await GetInnerAsync(key, accessor, (entry) => HasPassed(expireAfterUtc));
 
+        public async Task<TValue> QueryAsync<TValue>(string key)
+        {
+            var row = await GetRowAsync(key);
+            return Deserialize<TValue>(row.Value);
+        }
+        
         private bool HasPassed(DateTime expireAfter) => DateTime.UtcNow > expireAfter;
         
         private bool HasAged(DictionaryRow entry, TimeSpan maxAge)
