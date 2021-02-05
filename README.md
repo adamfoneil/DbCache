@@ -21,14 +21,19 @@ var fetched = await cache.GetAsync("object1",
 
 To determine if the returned data came from the cache or live source, use the [Source](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L26) property.
 
-# DbCacheLibrary.DbCache [DbCache.cs](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L15)
+
+# DbCacheLibrary.DbCache [DbCache.cs](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L16)
 ## Properties
-- string [KeyPrefix](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L24)
-- [ObjectSource](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L9) [Source](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L26)
+- string [KeyPrefix](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L25)
+- [ObjectSource](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L10) [Source](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L27)
 ## Methods
-- Task\<TValue\> [GetAsync](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L54)
+- Task\<TValue\> [GetAsync](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L55)
  (string key, Func<Task<TValue>> accessor, TimeSpan maxAge)
-- Task\<TValue\> [GetAsync](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L57)
+- Task\<TValue\> [GetAsync](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L58)
  (string key, Func<Task<TValue>> accessor, DateTime expireAfterUtc)
-- Task\<TValue\> [QueryAsync](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L60)
+- Task\<TValue\> [QueryAsync](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L61)
  (string key)
+- Task\<Dictionary\<string, int\>\> [SetEachAsync](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L67)
+ (IEnumerable<TItem> items, Func<TItem, string> keyAccessor)
+- Task\<Dictionary\<string, int\>\> [SetEachAsync](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L81)
+ (IEnumerable<TSource> items, Func<TSource, string> keyAccessor, Func<TSource, TTarget> saveAsTarget)
