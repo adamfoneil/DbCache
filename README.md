@@ -40,7 +40,7 @@ await _cache.SetEachAsync(drawings, d => d.FullUrl, (dwg) => new ImportedDrawing
 	RevInfo = dwg
 });
 ```
-I can later fetch the individual elements as needed using the `FullUrl` as a key. `GetAsync` will deserialize the json into its strongly-typed `ImportedDrawingInfo` form:
+I can later fetch the individual elements as needed using the `FullUrl` as a key. `GetAsync` will deserialize the json into its strongly-typed `ImportedDrawingInfo` form. In this example `request.SourceUri` represents the `FullUrl` key:
 
 ```csharp
 var revInfo = await _cache.GetAsync<ImportedDrawingInfo>(request.SourceUri);
