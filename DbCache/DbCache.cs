@@ -78,6 +78,21 @@ namespace DbCacheLibrary
             return result;
         }
 
+        public async Task<Dictionary<string, int>> SetEachAsync<TSource, TTarget>(IEnumerable<TSource> items, Func<TSource, string> keyAccessor, Func<TSource, TTarget> saveAsTarget)
+        {
+            var result = new Dictionary<string, int>();
+
+            foreach (var item in items)
+            {
+                var key = keyAccessor.Invoke(item);
+                var data = saveAsTarget.Invoke(item);
+                int id = await SetAsync(key, data);
+                result.Add(key, id);
+            }
+
+            return result;
+        }
+
         private bool HasPassed(DateTime expireAfter) => DateTime.UtcNow > expireAfter;
         
         private bool HasAged(DictionaryRow entry, TimeSpan maxAge)
