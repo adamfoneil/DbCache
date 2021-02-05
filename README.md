@@ -26,7 +26,7 @@ If your API call returns a json array, you can use `SetEachAsync` to store indiv
 
 Data saved with `SetEachAsync` has no expiration timespan or date. Since `DbCache` derives from `DbDictionary`, you can fetch this cache data [GetAsync](https://github.com/adamfoneil/Dapper.CX/blob/master/Dapper.CX.Base/Abstract/DbDictionary.cs#L70).
 
-Here's an example that shows `SetEachAsync` caching some API call array results. The array is `drawings`. Each element has a `FullUrl` property is assumed to be unique. Each element is converted to a hypothetical `ImportedDrawingInfo` object.
+Here's a hypothetical example that shows `SetEachAsync` caching some API call array results. The array is `drawings`. Each element has a `FullUrl` property that is assumed to be unique. Each element is converted to a hypothetical `ImportedDrawingInfo` object.
 
 ```csharp
 await _cache.SetEachAsync(drawings, d => d.FullUrl, (dwg) => new ImportedDrawingInfo()
