@@ -45,6 +45,8 @@ I can later fetch the individual elements as needed using the `FullUrl` as a key
 ```csharp
 var revInfo = await _cache.GetAsync<ImportedDrawingInfo>(request.SourceUri);
 ```
+#Other Users
+Although I made this with API calls in mind, you can cache anything you can fetch or query with the `accessor` argument of [GetAsync](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L55). Results of database queries, for example, will work fine to cache as strong-typed json.
 
 # DbCacheLibrary.DbCache [DbCache.cs](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L16)
 ## Properties
