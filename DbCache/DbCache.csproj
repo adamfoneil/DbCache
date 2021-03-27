@@ -14,8 +14,10 @@
     <PackageProjectUrl>https://github.com/adamfoneil/DbCache</PackageProjectUrl>
     <RepositoryUrl>https://github.com/adamfoneil/DbCache</RepositoryUrl>
     <PackageTags>sql-server cache</PackageTags>
-    <Version>1.0.3</Version>
-    <PackageReleaseNotes>added SetEachAsync for saving json of individual objects from an IEnumerable</PackageReleaseNotes>
+    <Version>1.0.4</Version>
+    <PackageReleaseNotes>https://github.com/adamfoneil/DbCache/issues/8</PackageReleaseNotes>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <ItemGroup>
