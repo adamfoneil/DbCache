@@ -21,6 +21,33 @@ var fetched = await cache.GetAsync("object1",
 
 To determine if the returned data came from the cache or live source, use the [Source](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L26) property.
 
+# Using SetEachAsync
+If your API call returns a json array, you can use `SetEachAsync` to store individual array elements as separate cache rows. This lets you get these individual elements later without enumerating the original array again. There are two overloads, [one](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L67) that stores your original json data as-is, and another lets you [transform](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L81) or modify the json in some way. Both overloads return `Dictionary<string, int>` with all the keys and generated cache row `Id` values.
+
+Data saved with `SetEachAsync` has no expiration timespan or date. Since `DbCache` derives from `DbDictionary`, you can fetch this cache data [GetAsync](https://github.com/adamfoneil/Dapper.CX/blob/master/Dapper.CX.Base/Abstract/DbDictionary.cs#L70).
+
+Here's a hypothetical example that shows `SetEachAsync` caching some API call array results. The array is `drawings`. Each element has a `FullUrl` property that is assumed to be unique. Each element is converted to a hypothetical `ImportedDrawingInfo` object.
+
+```csharp
+await _cache.SetEachAsync(drawings, d => d.FullUrl, (dwg) => new ImportedDrawingInfo()
+{
+	CompanyId = CompanyId.Value,
+	CompanyName = companyDictionary[CompanyId.Value],
+	ProjectId = ProjectId.Value,
+	ProjectName = projectDictionary[ProjectId.Value],
+	DrawingSetId = DrawingSetId.Value,
+	DrawingSetName = drawingSetDictionary[DrawingSetId.Value],
+	RevInfo = dwg
+});
+```
+I can later fetch the individual elements as needed using the `FullUrl` as a key. `GetAsync` will deserialize the json into its strongly-typed `ImportedDrawingInfo` form. In this example `request.SourceUri` represents the `FullUrl` key:
+
+```csharp
+var revInfo = await _cache.GetAsync<ImportedDrawingInfo>(request.SourceUri);
+```
+
+# Other Uses
+Although I made this with API calls in mind, you can cache anything you can fetch or query with the `accessor` argument of [GetAsync](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L55). Results of database queries, for example, will work fine to cache as strong-typed json.
 
 # DbCacheLibrary.DbCache [DbCache.cs](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L16)
 ## Properties
