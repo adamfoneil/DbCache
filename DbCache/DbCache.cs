@@ -26,7 +26,13 @@ namespace DbCacheLibrary
 
         public ObjectSource Source { get; private set; }
 
-        private async Task<TValue> GetInnerAsync<TValue>(string key, Func<Task<TValue>> accessor, Func<DictionaryRow, bool> expirationCheck, Func<TValue, string, Task> customSaveAction = null)
+        public async Task<TValue> GetAsync<TValue>(string key, Func<Task<TValue>> accessor, TimeSpan maxAge) =>
+            await GetInnerAsync(key, accessor, (entry) => HasAged(entry, maxAge));
+
+        public async Task<TValue> GetAsync<TValue>(string key, Func<Task<TValue>> accessor, DateTime expireAfterUtc) =>
+            await GetInnerAsync(key, accessor, (entry) => HasPassed(expireAfterUtc));
+
+        private async Task<TValue> GetInnerAsync<TValue>(string key, Func<Task<TValue>> accessor, Func<DictionaryRow, bool> expirationCheck)
         {
             await InitializeAsync();
 
@@ -39,14 +45,7 @@ namespace DbCacheLibrary
             {
                 // query it anew and store
                 value = await accessor.Invoke();
-                if (customSaveAction != null)
-                {
-                    await customSaveAction.Invoke(value, key);
-                }
-                else
-                {
-                    await SetAsync(key, value);
-                }                
+                await SetAsync(key, value);
                 Source = ObjectSource.Live;
             }
             else
@@ -58,12 +57,6 @@ namespace DbCacheLibrary
 
             return value;
         }
-
-        public async Task<TValue> GetAsync<TValue>(string key, Func<Task<TValue>> accessor, TimeSpan maxAge, Func<TValue, string, Task> customSaveAction = null) =>
-            await GetInnerAsync(key, accessor, (entry) => HasAged(entry, maxAge), customSaveAction);
-
-        public async Task<TValue> GetAsync<TValue>(string key, Func<Task<TValue>> accessor, DateTime expireAfterUtc, Func<TValue, string, Task> customSaveAction = null) =>
-            await GetInnerAsync(key, accessor, (entry) => HasPassed(expireAfterUtc), customSaveAction);
 
         public async Task<TValue> QueryAsync<TValue>(string key)
         {
