@@ -1,5 +1,4 @@
 ﻿using Dapper.CX.Abstract;
-using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Data;
