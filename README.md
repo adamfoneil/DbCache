@@ -49,18 +49,19 @@ var revInfo = await _cache.GetAsync<ImportedDrawingInfo>(request.SourceUri);
 # Other Uses
 Although I made this with API calls in mind, you can cache anything you can fetch or query with the `accessor` argument of [GetAsync](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L55). Results of database queries, for example, will work fine to cache as strong-typed json.
 
-# DbCacheLibrary.DbCache [DbCache.cs](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L16)
+
+# DbCacheLibrary.DbCache [DbCache.cs](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L15)
 ## Properties
-- string [KeyPrefix](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L25)
-- [ObjectSource](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L10) [Source](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L27)
+- string [KeyPrefix](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L24)
+- [ObjectSource](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L9) [Source](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L26)
 ## Methods
-- Task\<TValue\> [GetAsync](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L55)
+- Task\<TValue\> [GetAsync](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L28)
  (string key, Func<Task<TValue>> accessor, TimeSpan maxAge)
-- Task\<TValue\> [GetAsync](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L58)
+- Task\<TValue\> [GetAsync](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L31)
  (string key, Func<Task<TValue>> accessor, DateTime expireAfterUtc)
-- Task\<TValue\> [QueryAsync](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L61)
+- Task\<TValue\> [QueryAsync](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L60)
  (string key)
-- Task\<Dictionary\<string, int\>\> [SetEachAsync](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L67)
+- Task\<Dictionary\<string, int\>\> [SetEachAsync](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L66)
  (IEnumerable<TItem> items, Func<TItem, string> keyAccessor)
-- Task\<Dictionary\<string, int\>\> [SetEachAsync](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L81)
+- Task\<Dictionary\<string, int\>\> [SetEachAsync](https://github.com/adamfoneil/DbCache/blob/master/DbCache/DbCache.cs#L80)
  (IEnumerable<TSource> items, Func<TSource, string> keyAccessor, Func<TSource, TTarget> saveAsTarget)
